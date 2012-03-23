@@ -115,7 +115,10 @@ public class TerminalKeyListener implements OnKeyListener, OnSharedPreferenceCha
 			final boolean hardKeyboardHidden = manager.hardKeyboardHidden;
 
 			// Ignore all key-up events except for the special keys
-			if (event.getAction() == KeyEvent.ACTION_UP) {
+			// --unless ctrl or alt is pressed - this seems to fix some issues with my keyboard
+			if (event.getAction() == KeyEvent.ACTION_UP &&
+				!event.isCtrlPressed() &&
+				!event.isAltPressed()) {
 				// There's nothing here for virtual keyboard users.
 				if (!hardKeyboard || (hardKeyboard && hardKeyboardHidden))
 					return false;
